@@ -1,0 +1,16 @@
+[Unit]
+Description=Quire booklet imposition (quire.holyx.link)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/luke/tools/quire
+Environment=QUIRE_HOST=127.0.0.1
+Environment=QUIRE_PORT=8883
+ExecStart=/home/luke/tools/quire/.venv/bin/python -m uvicorn app:app --host 127.0.0.1 --port 8883 --proxy-headers --forwarded-allow-ips=127.0.0.1
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Quire: fold a booklet</title>
+  <meta name="description" content="Write a short booklet, see which page lands on which side of the sheet, and print a PDF you can fold." />
+  <meta name="theme-color" content="#14110e" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" type="image/svg+xml" href="/static/brand/logo.svg" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="page">
+    <header class="nav">
+      <a class="nav-brand" href="/" aria-label="Quire home">
+        <img src="/static/brand/logo.svg" width="28" height="28" alt="" />
+        <span>Quire</span>
+      </a>
+      <details class="nav-menu">
+        <summary class="btn ghost sm nav-menu-btn" aria-label="Menu">Menu</summary>
+        <div class="nav-menu-panel">
+          <a href="#write">Write</a>
+          <a href="#order">Order</a>
+          <a href="#how">How</a>
+          <a href="#limits">Limits</a>
+        </div>
+      </details>
+    </header>
+    <main id="main">
+      <p class="eyebrow">Sheet order for a real fold</p>
+      <h1>Fold a booklet.</h1>
+      <p class="lede">Write the pages here, or say how many you already have. Quire nests the sheets and gives you a PDF the copier can duplex.</p>
+      <div class="mini" aria-hidden="true">
+        <div class="mini-sheet">
+          <div class="mini-half"><span>8</span><em>Back cover</em></div>
+          <div class="mini-fold"></div>
+          <div class="mini-half"><span>1</span><em>Front cover</em></div>
+        </div>
+        <p class="mini-cap">Outside sheet, front face. The fold is the brass line.</p>
+      </div>
+      <p class="status<!--STATUS_CLASS-->" role="status"><!--STATUS--></p>
+      <div class="split">
+        <form class="card" id="write" action="/api/booklets" method="post">
+          <h2>Write</h2>
+          <label class="field">
+            <span>Title</span>
+            <input name="title" type="text" maxlength="60" required autocomplete="off" autocapitalize="sentences" placeholder="Notes from the porch" value="<!--TITLE-->" />
+          </label>
+          <label class="field">
+            <span>Paper</span>
+            <select name="paper">
+              <option value="letter" selected>US Letter</option>
+              <option value="a4">A4</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Quire</span>
+            <select name="quire">
+              <option value="4">4, one folded sheet</option>
+              <option value="8" selected>8, a thin signature</option>
+              <option value="12">12</option>
+              <option value="16">16, a sewn section</option>
+            </select>
+          </label>
+          <p class="hint">Page 1 becomes the front cover. Empty pads fill the quire.</p>
+          <button type="submit" class="btn primary lg">Start the booklet</button>
+        </form>
+        <form class="card" id="order" action="/map" method="get">
+          <h2>Order</h2>
+          <label class="field">
+            <span>Pages you already have</span>
+            <input name="pages" type="number" inputmode="numeric" min="1" max="64" value="8" required />
+          </label>
+          <label class="field">
+            <span>Quire</span>
+            <select name="quire">
+              <option value="4">4, one folded sheet</option>
+              <option value="8" selected>8, a thin signature</option>
+              <option value="12">12</option>
+              <option value="16">16, a sewn section</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Paper</span>
+            <select name="paper">
+              <option value="letter" selected>US Letter</option>
+              <option value="a4">A4</option>
+            </select>
+          </label>
+          <p class="hint">No account. You get the sheet diagram and a numbered dummy to fold first.</p>
+          <button type="submit" class="btn primary lg">Show the sheets</button>
+        </form>
+      </div>
+      <form class="card" action="/api/booklets" method="post">
+        <input type="hidden" name="sample" value="1" />
+        <h2>Guide</h2>
+        <p class="hint">Six pages on letter paper, one quire of 8. It explains the fold by being the fold.</p>
+        <button type="submit" class="btn lg">Use the folding guide</button>
+      </form>
+      <section id="how" class="block">
+        <h2>How</h2>
+        <div class="steps">
+          <div class="step"><span class="badge">1</span><p>Pick a quire. 4 is one sheet. 8 is a thin signature. 16 is a section you can sew.</p></div>
+          <div class="step"><span class="badge">2</span><p>The diagram shows each sheet, front and back. Page 1 sits on the front right. The last page of that quire sits on the front left.</p></div>
+          <div class="step"><span class="badge">3</span><p>Print landscape, double sided, flip on the short edge. Fold on the ticks. Nest the center sheet inside the outside sheet.</p></div>
+        </div>
+      </section>
+      <section id="limits" class="block">
+        <h2>Limits</h2>
+        <ul class="plain">
+          <li>64 pages. A saved booklet lasts 30 days, then it is gone.</li>
+          <li>12 new booklets per IP per hour. The owner link is the only key.</li>
+          <li>No creep shift. Inner sheets may stick out. Trim after folding if you care.</li>
+          <li>No accounts. Lose the owner link and the booklet stays read only.</li>
+          <li>Script the order: <a href="/api/plan?pages=8&amp;quire=8">/api/plan?pages=8&amp;quire=8</a></li>
+        </ul>
+      </section>
+    </main>
+    <footer class="foot"><p>quire · holy-hermes</p></footer>
+  </div>
+  <script src="/static/home.js"></script>
+</body>
+</html>
