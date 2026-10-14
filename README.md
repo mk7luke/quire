@@ -3,6 +3,7 @@
 Write a short booklet, or count the pages you already have. See which page lands on which side of the sheet. Print a PDF you can fold.
 
 Live: https://quire.holyx.link
+Source: https://github.com/mk7luke/quire
 
 ## What it does
 
