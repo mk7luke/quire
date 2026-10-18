@@ -1066,7 +1066,7 @@ def map_page(pages: int = 8, quire: int = 8, paper: str = "letter") -> HTMLRespo
         "",
         "",
         "",
-        sheets_html(plan, {}) + adjust,
+        sheets_html(plan, {n: {"heading": "", "body": "Your page"} for n in range(1, pages + 1)}) + adjust,
         printed,
         pages,
     )
